@@ -16,13 +16,17 @@ def cmd_date(args):
 def cmd_clear(args):
     os.system("cls")
 
+def cmd_whoami(args):
+    print(os.name)
+
 
 COMMANDS = {
     "help" : cmd_help,
     "exit" : cmd_exit,
     "echo" : cmd_echo,
     "date" : cmd_date,
-    "clear" : cmd_clear
+    "clear" : cmd_clear,
+    "whoami" : cmd_whoami
 }
 
 def execute(cmd,args):
