@@ -1,33 +1,69 @@
 import datetime
 import os
+from core.command import Command
 
-def cmd_help(args):
-    print("Available Commands:",", ".join(COMMANDS.keys()))
 
-def cmd_exit(args):
-    raise SystemExit
+class HelpCommand(Command):
+    name = "help"
+    help = "Show Available Commands"
 
-def cmd_echo(args):
-    print(" ".join(args))
+    def execute(self, args):
+        print("Available Commands: ")
+        for cmd in COMMANDS.values():
+            print(f"- {cmd.name} : {cmd.help}")
 
-def cmd_date(args):
-    print(datetime.datetime.now())
 
-def cmd_clear(args):
-    os.system("cls")
+class ExitCommand(Command):
+    name = "exit"
+    help = "Exit the shell"
 
-def cmd_whoami(args):
-    print(os.name)
+    def execute(self, args):
+        raise SystemExit
+    
+
+class EchoCommand(Command):
+    name = "echo"
+    help = "Echo input Arguments"
+
+    def execute(self, args):
+        print(" ".join(args))
+
+class DateCommand(Command):
+    name = "date"
+    help = "Show current date and time"
+
+    def execute(self, args):
+        print(datetime.datetime.now())
+
+class ClearCommand(Command):
+    name = "clear"
+    help = "Clear the terminal"
+
+    def execute(self, args):
+        os.system("cls")
+
+class WhoAmICommand(Command):
+    name = "whoami"
+    help = "show currently who logged in"
+
+    def execute(self, args):
+        print(os.getlogin())
+
+
+
 
 
 COMMANDS = {
-    "help" : cmd_help,
-    "exit" : cmd_exit,
-    "echo" : cmd_echo,
-    "date" : cmd_date,
-    "clear" : cmd_clear,
-    "whoami" : cmd_whoami
+    cmd.name : cmd for cmd in [
+        HelpCommand(),
+        ExitCommand(),
+        EchoCommand(),
+        DateCommand(),
+        ClearCommand(),
+        WhoAmICommand()
+    ]
 }
+
 
 def execute(cmd,args):
     if not cmd:
@@ -36,6 +72,6 @@ def execute(cmd,args):
     if not command:
         print(f"Unknown Command: {cmd}")
         return
-    command(args)
+    command.execute(args)
 
     
