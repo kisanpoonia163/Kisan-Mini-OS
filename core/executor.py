@@ -8,9 +8,20 @@ class HelpCommand(Command):
     help = "Show Available Commands"
 
     def execute(self, args):
-        print("Available Commands: ")
-        for cmd in COMMANDS.values():
-            print(f"- {cmd.name} : {cmd.help}")
+        if not args:
+            print("Available Commands: ")
+            for cmd in COMMANDS.values():
+                print(f"- {cmd.name} : {cmd.help}")
+            return
+        
+        cmd_name = args[0]
+        cmd = COMMANDS.get(cmd_name)
+
+        if not cmd:
+            print(f"No help Availale for : {cmd_name}")
+            return
+        
+        print(f"{cmd.name} -> {cmd.help}")
 
 
 class ExitCommand(Command):
