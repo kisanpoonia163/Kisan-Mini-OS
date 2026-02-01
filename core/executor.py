@@ -60,6 +60,29 @@ class WhoAmICommand(Command):
     def execute(self, args,context):
         print(os.getlogin(),"v{context.version}")
 
+class SetCommand(Command):
+    name = "set"
+    help = "set environment varialble : set KEY VALUE"
+
+    def execute(self, args, context):
+        if len(args) != 2:
+            print("Usage: set KEY VALUE")
+            return
+        
+        key, value = args
+        context.env[key] = value
+
+class EnvCommand(Command):
+    name = "env"
+    help = "Show all environment variables"
+
+    def execute(self, args, context):
+        if not context.env:
+            print("No environment variable set")
+            return
+        
+        for key,value in context.env.items():
+            print(f"{key}={value}")
 
 
 
@@ -71,7 +94,9 @@ COMMANDS = {
         EchoCommand(),
         DateCommand(),
         ClearCommand(),
-        WhoAmICommand()
+        WhoAmICommand(),
+        EnvCommand(),
+        SetCommand()
     ]
 }
 
