@@ -12,9 +12,6 @@ class Shell:
                 command = input("Kisan OS> ")
                 cmd, args = parse(command)
                 execute(cmd,args,self.context)
-            except SystemExit:
-                print("Goodbye 👋")
-                break
             except KeyboardInterrupt:
-                print("\nInterrupted ❌")
+                print("\nInterrupted")
                 break

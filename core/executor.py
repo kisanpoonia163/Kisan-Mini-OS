@@ -58,7 +58,7 @@ class WhoAmICommand(Command):
     help = "show System Identity"
 
     def execute(self, args,context):
-        print(os.getlogin(),"v{context.version}")
+        print(os.getlogin(),f"v{context.version}")
 
 class SetCommand(Command):
     name = "set"
@@ -85,6 +85,42 @@ class EnvCommand(Command):
             print(f"{key}={value}")
 
 
+class GetCommand(Command):
+    name = "get"
+    help = "Get value of an environment variable"
+
+    def execute(self, args, context):
+        if not args:
+            print("Usage : get <VARIABLE>")
+            return
+        
+        key = args[0]
+
+        if key not in context.env:
+            print("Variable not found")
+            return
+        
+        print(context.env[key])
+
+
+class UnsetCommand(Command):
+    name = "unset"
+    help = "Remove an environment Variable"
+
+    def execute(self, args, context):
+        if not args:
+            print("Usage: unset <VARIABLE>")
+            return
+        
+        key = args[0]
+
+        if key not in context.env:
+            print("Variable not found")
+            return
+        
+        del context.env[key]
+
+
 
 
 COMMANDS = {
@@ -96,7 +132,9 @@ COMMANDS = {
         ClearCommand(),
         WhoAmICommand(),
         EnvCommand(),
-        SetCommand()
+        SetCommand(),
+        UnsetCommand(),
+        GetCommand()
     ]
 }
 
