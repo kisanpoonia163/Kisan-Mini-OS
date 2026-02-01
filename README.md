@@ -1,3 +1,5 @@
 # Kisan Mini OS
 
-It is currently under development.
+### This is not a real system it is simulation or virtual system.
+
+#### This is for learning purpose and it is under development.

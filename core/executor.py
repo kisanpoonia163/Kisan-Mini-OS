@@ -58,7 +58,7 @@ class WhoAmICommand(Command):
     help = "show System Identity"
 
     def execute(self, args,context):
-        print(os.getlogin(),f"v{context.version}")
+        print(f"{os.getlogin()} v{context.version}")
 
 class SetCommand(Command):
     name = "set"
