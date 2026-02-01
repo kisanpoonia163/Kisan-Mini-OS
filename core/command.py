@@ -5,5 +5,5 @@ class Command(ABC):
     help:str = ""
 
     @abstractmethod
-    def execute(self,args:list[str]):
+    def execute(self,args:list[str],context):
         pass

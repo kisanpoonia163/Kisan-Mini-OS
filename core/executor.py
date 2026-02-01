@@ -7,7 +7,7 @@ class HelpCommand(Command):
     name = "help"
     help = "Show Available Commands"
 
-    def execute(self, args):
+    def execute(self, args,context):
         if not args:
             print("Available Commands: ")
             for cmd in COMMANDS.values():
@@ -28,37 +28,37 @@ class ExitCommand(Command):
     name = "exit"
     help = "Exit the shell"
 
-    def execute(self, args):
-        raise SystemExit
+    def execute(self, args,context):
+        context.running = False
     
 
 class EchoCommand(Command):
     name = "echo"
     help = "Echo input Arguments"
 
-    def execute(self, args):
+    def execute(self, args,context):
         print(" ".join(args))
 
 class DateCommand(Command):
     name = "date"
     help = "Show current date and time"
 
-    def execute(self, args):
+    def execute(self, args,context):
         print(datetime.datetime.now())
 
 class ClearCommand(Command):
     name = "clear"
     help = "Clear the terminal"
 
-    def execute(self, args):
+    def execute(self, args,context):
         os.system("cls")
 
 class WhoAmICommand(Command):
     name = "whoami"
-    help = "show currently who logged in"
+    help = "show System Identity"
 
-    def execute(self, args):
-        print(os.getlogin())
+    def execute(self, args,context):
+        print(os.getlogin(),"v{context.version}")
 
 
 
@@ -76,13 +76,13 @@ COMMANDS = {
 }
 
 
-def execute(cmd,args):
+def execute(cmd,args,context):
     if not cmd:
         return
     command = COMMANDS.get(cmd)
     if not command:
         print(f"Unknown Command: {cmd}")
         return
-    command.execute(args)
+    command.execute(args,context)
 
     
